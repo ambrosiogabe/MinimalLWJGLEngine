@@ -15,8 +15,8 @@ public class Window {
     private String title;
     private long glfwWindow;
     private boolean vsync = true;
-    
-    private float width, height;
+
+    private int width, height;
 
     private static Window window = null;
 
