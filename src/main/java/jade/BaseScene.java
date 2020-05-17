@@ -8,9 +8,9 @@ import util.AssetPool;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class LevelEditorScene extends Scene {
+public class BaseScene extends Scene {
 
-    public LevelEditorScene() {
+    public BaseScene() {
 
     }
 

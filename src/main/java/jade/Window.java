@@ -3,7 +3,6 @@ package jade;
 import eventHandlers.KeyListener;
 import eventHandlers.MouseListener;
 import eventHandlers.WindowResizeListener;
-import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -13,12 +12,11 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
-    private int width, height;
     private String title;
     private long glfwWindow;
-
-    public float r, g, b, a;
-    private boolean fadeToBlack = false;
+    private boolean vsync = true;
+    
+    private float width, height;
 
     private static Window window = null;
 
@@ -27,22 +25,18 @@ public class Window {
     private Window() {
         this.width = 1920;
         this.height = 1080;
-        this.title = "Mario";
-        r = 0;
-        b = 0;
-        g = 0;
-        a = 1;
+        this.title = "My Starter Project";
     }
 
     public static void changeScene(int newScene) {
+        /*
+         * Add new scene configurations in here.
+         * That way you can have more then one scene.
+         */
+
         switch (newScene) {
             case 0:
-                currentScene = new LevelEditorScene();
-                currentScene.init();
-                currentScene.start();
-                break;
-            case 1:
-                currentScene = new LevelScene();
+                currentScene = new BaseScene();
                 currentScene.init();
                 currentScene.start();
                 break;
@@ -65,8 +59,6 @@ public class Window {
     }
 
     public void run() {
-        System.out.println("Hello LWJGL " + Version.getVersion() + "!");
-
         init();
         loop();
 
@@ -108,7 +100,7 @@ public class Window {
         // Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
         // Enable v-sync
-        glfwSwapInterval(1);
+        glfwSwapInterval(vsync ? 1 : 0);
 
         // Make the window visible
         glfwShowWindow(glfwWindow);
@@ -127,26 +119,25 @@ public class Window {
     }
 
     public void loop() {
-        float beginTime = (float)glfwGetTime();
-        float endTime;
-        float dt = -1.0f;
+        float lastFrameTime = -1f;
 
         while (!glfwWindowShouldClose(glfwWindow)) {
+            float time = (float)glfwGetTime();
+            float dt = lastFrameTime - time;
+            if (lastFrameTime == -1) {
+                dt = 1f / 60f;
+            }
+            lastFrameTime = time;
+
             // Poll events
             glfwPollEvents();
 
-            glClearColor(r, g, b, a);
+            glClearColor(0f, 0f, 0f, 1f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            if (dt >= 0) {
-                currentScene.update(dt);
-            }
+            currentScene.update(dt);
 
             glfwSwapBuffers(glfwWindow);
-
-            endTime = (float)glfwGetTime();
-            dt = endTime - beginTime;
-            beginTime = endTime;
         }
     }
 }
