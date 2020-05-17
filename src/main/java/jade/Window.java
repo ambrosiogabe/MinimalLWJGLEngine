@@ -1,5 +1,8 @@
 package jade;
 
+import eventHandlers.KeyListener;
+import eventHandlers.MouseListener;
+import eventHandlers.WindowResizeListener;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -116,6 +119,9 @@ public class Window {
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
+
+        // Set resize callback after we make the current context.
+        glfwSetWindowSizeCallback(glfwWindow, WindowResizeListener::resizeCallback);
 
         Window.changeScene(0);
     }

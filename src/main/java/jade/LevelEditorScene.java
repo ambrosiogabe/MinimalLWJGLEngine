@@ -1,11 +1,9 @@
 package jade;
 
-import components.Sprite;
 import components.SpriteRenderer;
 import components.Spritesheet;
+import eventHandlers.KeyListener;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 import util.AssetPool;
 
 import static org.lwjgl.glfw.GLFW.*;
