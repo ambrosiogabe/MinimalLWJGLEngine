@@ -2,5 +2,3 @@
 build/*
 gradle/*
 .gradle/*
-uiPreview.svg
-tilesets.svg
