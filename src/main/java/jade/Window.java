@@ -140,4 +140,12 @@ public class Window {
             glfwSwapBuffers(glfwWindow);
         }
     }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 }
