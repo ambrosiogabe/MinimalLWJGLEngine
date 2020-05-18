@@ -4,6 +4,7 @@ import components.SpriteRenderer;
 import components.Spritesheet;
 import eventHandlers.KeyListener;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 import util.AssetPool;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -18,9 +19,13 @@ public class BaseScene extends Scene {
     public void init() {
         loadResources();
 
-        this.camera = new Camera(new Vector2f(-250, 0));
+        this.camera = new Camera(new Vector2f(0, 0));
 
         Spritesheet sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
+
+        GameObject background = new GameObject("Background", new Transform(new Vector2f(), new Vector2f(1920, 1080)));
+        background.addComponent(new SpriteRenderer(new Vector4f(0.53f, 0.91f, 0.91f, 1)));
+        this.addGameObjectToScene(background);
 
         GameObject obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
         obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));

@@ -4,6 +4,7 @@ import eventHandlers.KeyListener;
 import eventHandlers.MouseListener;
 import eventHandlers.WindowResizeListener;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -16,6 +17,9 @@ public class Window {
     private long glfwWindow;
     private boolean vsync = true;
 
+    private int targetWidth = 1920;
+    private int targetHeight = 1080;
+    private float targetAspectRatio = (float)targetWidth / (float)targetHeight;
     private int width, height;
 
     private static Window window = null;
@@ -115,6 +119,11 @@ public class Window {
         // Set resize callback after we make the current context.
         glfwSetWindowSizeCallback(glfwWindow, WindowResizeListener::resizeCallback);
 
+        GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        this.targetWidth = vidMode.width();
+        this.targetHeight = vidMode.height();
+        this.targetAspectRatio = (float)this.targetWidth / (float)this.targetHeight;
+
         Window.changeScene(0);
     }
 
@@ -147,5 +156,9 @@ public class Window {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public float getTargetAspectRatio() {
+        return this.targetAspectRatio;
     }
 }
